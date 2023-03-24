@@ -1,8 +1,8 @@
 <?php
 $serverName = "localhost";
 $userName = "root";
-$userPassword = "12345678";
-$dbname = "se-resto";
+$userPassword = "";
+$dbname = "se-resto-db";
 
 try
 {

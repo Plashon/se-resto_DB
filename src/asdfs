@@ -13,31 +13,31 @@
 <?php
 require '../connect.php';
 
-$sql_select = 'SELECT * from foodtype order by FoodType_ID';
+$sql_select = 'select * from foodtype order by FoodTypeID';
 $stmt_s = $conn->prepare($sql_select);
 $stmt_s->execute();
 
 if (isset($_POST['submit'])) {
     
-    if (!empty($_POST['Food_ID']) && !empty($_POST['Food_Name'])) {
-        echo '<br>' . $_POST['Food_ID'];
+    if (!empty($_POST['FoodID']) && !empty($_POST['FoodName'])) {
+        echo '<br>' . $_POST['FoodID'];
         //require 'connect.php';
         $uploadFile = $_FILES['image']['name'];
         $tmpFile = $_FILES['image']['tmp_name'];
         echo " upload file = " . $uploadFile;
         echo " tmp file = " . $tmpFile;
 
-        $sql = "INSERT into foodmenu values (:Food_ID, :Food_Name, :Food_Price, :image, :FoodType_ID)";
+        $sql = "insert into food values (:FoodID, :FoodName, :FoodPrice, :FoodTypeID, :image)";
 
         $stmt = $conn->prepare($sql);
-        $stmt->bindParam(':Food_ID', $_POST['Food_ID']);
-        $stmt->bindParam(':Food_Name', $_POST['Food_Name']);
-        $stmt->bindParam(':Food_Price', $_POST['Food_Price']);
-        $stmt->bindParam(':FoodType_ID', $_POST['FoodType_ID']);
+        $stmt->bindParam(':FoodID', $_POST['FoodID']);
+        $stmt->bindParam(':FoodName', $_POST['FoodName']);
+        $stmt->bindParam(':FoodPrice', $_POST['FoodPrice']);
+        $stmt->bindParam(':FoodTypeID', $_POST['FoodTypeID']);
         $stmt->bindParam(':image', $uploadFile);
         echo "image = " . $uploadFile;
 
-        $fullpath = "./image/" . $uploadFile;
+        $fullpath = "../image/" . $uploadFile;
          echo " fullpath = " . $fullpath;
          move_uploaded_file($tmpFile, $fullpath);
 
@@ -67,17 +67,17 @@ if (isset($_POST['submit'])) {
             <h3>ฟอร์มเพิ่มข้อมูลลูกค้า</h3>
             <form  action="addFood_dropdown.php" method="POST" enctype="multipart/form-data">
             <br>
-            <input type="text" placeholder="Enter Your FoodID" name="Food_ID"> 
+            <input type="text" placeholder="Enter Your FoodID" name="FoodID"> 
             <br> <br>
-            <input type="text" placeholder="Enter Your FoodName" name="Food_Name">
+            <input type="text" placeholder="Enter Your FoodName" name="FoodName">
             <br> <br>
-            <input type="number" placeholder="Enter Your FoodPrice" name="Food_Price">
+            <input type="number" placeholder="Enter Your FoodPrice" name="FoodPrice">
             <br> <br>   
             <label>Select a foodtype</label>
-                <select name="FoodType_ID">
+                <select name="FoodTypeID">
                     <?php while ($cc = $stmt_s->fetch(PDO::FETCH_ASSOC)) { ?>
-                        <option value="<?php echo $cc['FoodType_ID']; ?>">
-                            <?php echo $cc['FoodType_Name']; ?>
+                        <option value="<?php echo $cc['FoodTypeID']; ?>">
+                            <?php echo $cc['FoodTypeName']; ?>
                         </option>
                     <?php } ?>
                 </select>       
