@@ -2,7 +2,7 @@
 $serverName = "localhost";
 $userName = "root";
 $userPassword = "";
-$dbname = "se-resto-db";
+$dbname = "se_resto_db";
 
 try
 {
